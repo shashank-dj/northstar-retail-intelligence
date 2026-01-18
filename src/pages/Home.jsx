@@ -27,12 +27,22 @@ export default function Home() {
           Analyze demand, income, footfall & competition in seconds.
         </p>
 
-        <button
-          onClick={() => navigate("/analyze")}
-          className="mt-10 bg-blue-500 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-blue-600"
-        >
-          Analyze a Location
-        </button>
+        {/* Primary CTAs */}
+        <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+          <button
+            onClick={() => navigate("/analyze")}
+            className="bg-blue-500 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-blue-600 transition"
+          >
+            Analyze a Location
+          </button>
+
+          <button
+            onClick={() => navigate("/recommend")}
+            className="bg-gray-900 px-8 py-4 rounded-xl text-lg font-semibold border border-gray-700 hover:border-gray-500 transition"
+          >
+            Find Best Locations
+          </button>
+        </div>
       </section>
 
       {/* Planned Features */}
