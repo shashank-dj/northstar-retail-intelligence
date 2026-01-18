@@ -61,7 +61,7 @@ export default function Analyze() {
           className="text-2xl font-bold cursor-pointer"
           onClick={() => navigate("/")}
         >
-          Northstar
+          Northstar Retail Intelligence
         </h1>
         <button className="bg-white text-black px-5 py-2 rounded-lg">
           Sign In
