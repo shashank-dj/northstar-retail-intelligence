@@ -61,7 +61,7 @@ export default function Recommend() {
           className="text-2xl font-bold cursor-pointer"
           onClick={() => navigate("/")}
         >
-          Northstar
+          Northstar Retail Intelligence
         </h1>
       </nav>
 
