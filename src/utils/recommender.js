@@ -1,6 +1,6 @@
 export function recommendLocations(areas, industry) {
   const industryWeights = {
-    QSR: {
+    Restaurant: {
       footfall: 0.4,
       income: 0.15,
       population: 0.1,
@@ -44,7 +44,7 @@ export function recommendLocations(areas, industry) {
 }
 
 function buildReason(area, industry) {
-  if (industry === "QSR") {
+  if (industry === "Restaurant") {
     return "High footfall and strong retail activity support quick-service demand."
   }
   if (industry === "Grocery") {
