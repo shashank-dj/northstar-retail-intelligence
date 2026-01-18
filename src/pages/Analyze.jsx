@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import SearchBar from "../components/SearchBar"
 import ResultCard from "../components/ResultCard"
 import AnalysisExplanation from "../components/AnalysisExplanation"
-import CategoryRecommendation from "../components/CategoryRecommendation" // ✅ NEW
+import CategoryRecommendation from "../components/CategoryRecommendation"
 
 export default function Analyze() {
   const [result, setResult] = useState(null)
