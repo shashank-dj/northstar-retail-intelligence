@@ -5,7 +5,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-950 text-white">
-      {/* Navbar */}
       <nav className="flex justify-between items-center px-10 py-6">
         <h1 className="text-2xl font-bold">Northstar</h1>
         <button className="bg-white text-black px-5 py-2 rounded-lg">
@@ -13,7 +12,6 @@ export default function Home() {
         </button>
       </nav>
 
-      {/* Hero */}
       <section className="flex flex-col items-center text-center mt-32 px-4">
         <h2 className="text-5xl font-extrabold max-w-4xl">
           Decide Where to Open Your{" "}
