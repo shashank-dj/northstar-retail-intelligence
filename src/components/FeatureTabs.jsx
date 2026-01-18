@@ -25,7 +25,7 @@ export default function FeatureTabs() {
   return (
     <section className="mt-32 px-6 max-w-6xl mx-auto">
       <h3 className="text-3xl font-bold text-center mb-12">
-        What Northstar Will Do
+        What Northstar Retail Intelligence Will Do
       </h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
