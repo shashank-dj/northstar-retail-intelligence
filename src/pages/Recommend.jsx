@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { recommendLocations } from "../utils/recommender"
+import HeatmapMap from "../components/HeatmapMap"
 
 export default function Recommend() {
   const [industry, setIndustry] = useState("QSR")
@@ -46,11 +47,14 @@ export default function Recommend() {
       })
 
     const ranked = recommendLocations(areas, industry)
+
+    // 🔥 Keep top 5 for MVP clarity
     setResults(ranked.slice(0, 5))
   }
 
   return (
     <div className="min-h-screen bg-gray-950 text-white px-4">
+      
       {/* Navbar */}
       <nav className="flex justify-between items-center px-10 py-6">
         <h1
@@ -61,15 +65,17 @@ export default function Recommend() {
         </h1>
       </nav>
 
-      <section className="max-w-4xl mx-auto mt-20 text-center">
+      {/* Recommender Header */}
+      <section className="max-w-5xl mx-auto mt-20 text-center">
         <h2 className="text-4xl font-bold">
           Location Recommender
         </h2>
 
         <p className="text-gray-400 mt-4">
-          Select your industry to find the best areas to open a store.
+          Select your industry to discover the best areas to open your store.
         </p>
 
+        {/* Controls */}
         <div className="mt-8 flex justify-center gap-4">
           <select
             value={industry}
@@ -83,40 +89,47 @@ export default function Recommend() {
 
           <button
             onClick={handleRecommend}
-            className="bg-blue-500 px-6 py-2 rounded-lg font-semibold"
+            className="bg-blue-500 px-6 py-2 rounded-lg font-semibold hover:bg-blue-600 transition"
           >
             Find Best Locations
           </button>
         </div>
 
+        {/* Results */}
         {results.length > 0 && (
-          <div className="mt-12 text-left">
-            <h3 className="text-2xl font-bold mb-6">
-              Top Recommended Areas
-            </h3>
+          <>
+            {/* 🔥 Heatmap */}
+            <HeatmapMap points={results} />
 
-            <div className="space-y-4">
-              {results.map((r, i) => (
-                <div
-                  key={i}
-                  className="bg-gray-900 border border-gray-800 rounded-lg p-4"
-                >
-                  <div className="flex justify-between items-center">
-                    <h4 className="text-xl font-semibold">
-                      {r.area}
-                    </h4>
-                    <span className="text-green-400 font-bold">
-                      Score: {r.recommenderScore}
-                    </span>
+            {/* Ranked List */}
+            <div className="mt-12 text-left">
+              <h3 className="text-2xl font-bold mb-6">
+                Top Recommended Areas
+              </h3>
+
+              <div className="space-y-4">
+                {results.map((r, i) => (
+                  <div
+                    key={i}
+                    className="bg-gray-900 border border-gray-800 rounded-lg p-4"
+                  >
+                    <div className="flex justify-between items-center">
+                      <h4 className="text-xl font-semibold">
+                        {r.area}
+                      </h4>
+                      <span className="text-green-400 font-bold">
+                        Score: {r.recommenderScore}
+                      </span>
+                    </div>
+
+                    <p className="text-sm text-gray-400 mt-2">
+                      {r.reason}
+                    </p>
                   </div>
-
-                  <p className="text-sm text-gray-400 mt-2">
-                    {r.reason}
-                  </p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          </>
         )}
       </section>
     </div>
