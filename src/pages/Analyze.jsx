@@ -9,47 +9,62 @@ export default function Analyze() {
   const navigate = useNavigate()
 
   const handleSearch = async (query) => {
-    const res = await fetch("/data/northstar_area_data.csv")
-    const text = await res.text()
+    try {
+      const res = await fetch("/data/northstar_area_data.csv")
+      const text = await res.text()
 
-    const rows = text.split("\n").slice(1)
-    const data = rows
-      .map((row) => row.trim())
-      .filter(Boolean)
-      .map((row) => {
-        const [
-          pincode,
-          area,
-          city,
-          population,
-          avg_income,
-          footfall,
-          competitors,
-          retail_index,
-          avg_rent,
-        ] = row.split(",")
+      const rows = text.split("\n").slice(1)
 
-        return {
-          pincode,
-          area,
-          city,
-          population: Number(population),
-          avg_income: Number(avg_income),
-          footfall: Number(footfall),
-          competitors: Number(competitors),
-          retail_index: Number(retail_index),
-          avg_rent: Number(avg_rent),
-        }
-      })
+      const data = rows
+        .map((row) => row.trim())
+        .filter(Boolean)
+        .map((row) => {
+          const [
+            pincode,
+            area,
+            city,
+            lat,
+            lng,
+            population,
+            avg_income,
+            footfall,
+            competitors,
+            retail_index,
+            avg_rent,
+          ] = row.split(",")
 
-    const match = data.find(
-      (d) =>
-        d.pincode === query ||
-        d.area.toLowerCase().includes(query.toLowerCase())
-    )
+          return {
+            pincode,
+            area,
+            city,
+            lat: parseFloat(lat),
+            lng: parseFloat(lng),
+            population: Number(population),
+            avg_income: Number(avg_income),
+            footfall: Number(footfall),
+            competitors: Number(competitors),
+            retail_index: Number(retail_index),
+            avg_rent: Number(avg_rent),
+          }
+        })
 
-    if (match) setResult(match)
-    else alert("Location not found in demo data")
+      const normalizedQuery = query.toLowerCase()
+
+      const match = data.find(
+        (d) =>
+          d.pincode === query ||
+          d.area.toLowerCase().includes(normalizedQuery)
+      )
+
+      if (match) {
+        setResult(match)
+      } else {
+        alert("Location not found in demo Bangalore dataset")
+      }
+    } catch (err) {
+      console.error("Failed to load data", err)
+      alert("Failed to analyze location")
+    }
   }
 
   return (
@@ -75,7 +90,7 @@ export default function Analyze() {
         </h2>
 
         <p className="text-gray-400 mt-4">
-          Enter a pincode or area name to evaluate retail feasibility.
+          Enter a Bangalore pincode or area name to evaluate retail feasibility.
         </p>
 
         <div className="mt-8 max-w-xl mx-auto">
