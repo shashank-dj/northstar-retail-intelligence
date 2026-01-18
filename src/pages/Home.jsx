@@ -1,10 +1,13 @@
 import { useNavigate } from "react-router-dom"
+import FeatureTabs from "../components/FeatureTabs"
 
 export default function Home() {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white">
+    <div className="min-h-screen bg-gray-950 text-white flex flex-col">
+      
+      {/* Navbar */}
       <nav className="flex justify-between items-center px-10 py-6">
         <h1 className="text-2xl font-bold">Northstar</h1>
         <button className="bg-white text-black px-5 py-2 rounded-lg">
@@ -12,6 +15,7 @@ export default function Home() {
         </button>
       </nav>
 
+      {/* Hero */}
       <section className="flex flex-col items-center text-center mt-32 px-4">
         <h2 className="text-5xl font-extrabold max-w-4xl">
           Decide Where to Open Your{" "}
@@ -30,6 +34,14 @@ export default function Home() {
           Analyze a Location
         </button>
       </section>
+
+      {/* Planned Features */}
+      <FeatureTabs />
+
+      {/* Footer */}
+      <footer className="mt-32 border-t border-gray-800 py-6 text-center text-sm text-gray-500">
+        © {new Date().getFullYear()} Northstar. Built for data-driven retail decisions.
+      </footer>
     </div>
   )
 }
