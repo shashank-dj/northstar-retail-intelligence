@@ -4,7 +4,7 @@ import { recommendLocations } from "../utils/recommender"
 import HeatmapMap from "../components/HeatmapMap"
 
 export default function Recommend() {
-  const [industry, setIndustry] = useState("QSR")
+  const [industry, setIndustry] = useState("Restaurant")
   const [results, setResults] = useState([])
   const navigate = useNavigate()
 
@@ -82,7 +82,7 @@ export default function Recommend() {
             onChange={(e) => setIndustry(e.target.value)}
             className="bg-gray-900 border border-gray-700 px-4 py-2 rounded-lg"
           >
-            <option value="QSR">QSR</option>
+            <option value="Restaurant">Restaurant</option>
             <option value="Grocery">Grocery</option>
             <option value="Fashion">Fashion</option>
           </select>
