@@ -9,7 +9,7 @@ export default function Home() {
       
       {/* Navbar */}
       <nav className="flex justify-between items-center px-10 py-6">
-        <h1 className="text-2xl font-bold">Northstar</h1>
+        <h1 className="text-2xl font-bold">Northstar Retail Intelligence</h1>
         <button className="bg-white text-black px-5 py-2 rounded-lg">
           Sign In
         </button>
