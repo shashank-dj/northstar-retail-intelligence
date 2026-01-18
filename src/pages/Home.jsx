@@ -1,50 +1,7 @@
-import { useState } from "react"
-import SearchBar from "../components/SearchBar"
-import ResultCard from "../components/ResultCard"
+import { useNavigate } from "react-router-dom"
 
 export default function Home() {
-  const [result, setResult] = useState(null)
-
-  const handleSearch = async (query) => {
-    const res = await fetch("/data/northstar_area_data.csv")
-    const text = await res.text()
-
-    const rows = text.split("\n").slice(1)
-    const data = rows.map((row) => {
-      const [
-        pincode,
-        area,
-        city,
-        population,
-        avg_income,
-        footfall,
-        competitors,
-        retail_index,
-        avg_rent,
-      ] = row.split(",")
-
-      return {
-        pincode,
-        area,
-        city,
-        population: Number(population),
-        avg_income: Number(avg_income),
-        footfall: Number(footfall),
-        competitors: Number(competitors),
-        retail_index: Number(retail_index),
-        avg_rent: Number(avg_rent),
-      }
-    })
-
-    const match = data.find(
-      (d) =>
-        d.pincode === query ||
-        d.area.toLowerCase().includes(query.toLowerCase())
-    )
-
-    if (match) setResult(match)
-    else alert("Location not found in demo data")
-  }
+  const navigate = useNavigate()
 
   return (
     <div className="min-h-screen bg-gray-950 text-white">
@@ -57,21 +14,23 @@ export default function Home() {
       </nav>
 
       {/* Hero */}
-      <section className="flex flex-col items-center text-center mt-24 px-4">
-        <h2 className="text-5xl font-extrabold">
-          Decide Where to Open Your <span className="text-blue-400">Next Store</span>
+      <section className="flex flex-col items-center text-center mt-32 px-4">
+        <h2 className="text-5xl font-extrabold max-w-4xl">
+          Decide Where to Open Your{" "}
+          <span className="text-blue-400">Next Store</span>
         </h2>
 
-        <p className="text-gray-400 mt-6 max-w-xl">
-          Location intelligence for retail brands. Analyze demand, income,
-          footfall & competition in seconds.
+        <p className="text-gray-400 mt-6 max-w-xl text-lg">
+          Location intelligence for retail brands.
+          Analyze demand, income, footfall & competition in seconds.
         </p>
 
-        <div className="mt-10 w-full max-w-xl">
-          <SearchBar onSearch={handleSearch} />
-        </div>
-
-        {result && <ResultCard area={result} />}
+        <button
+          onClick={() => navigate("/analyze")}
+          className="mt-10 bg-blue-500 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-blue-600"
+        >
+          Analyze a Location
+        </button>
       </section>
     </div>
   )
