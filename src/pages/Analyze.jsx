@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import SearchBar from "../components/SearchBar"
 import ResultCard from "../components/ResultCard"
 import AnalysisExplanation from "../components/AnalysisExplanation"
+import { calculateRetailScore } from "../utils/scoreCalculator"
 
 export default function Analyze() {
   const [result, setResult] = useState(null)
@@ -15,7 +16,7 @@ export default function Analyze() {
 
       const rows = text.split("\n").slice(1)
 
-      const data = rows
+      const dataset = rows
         .map((row) => row.trim())
         .filter(Boolean)
         .map((row) => {
@@ -50,14 +51,19 @@ export default function Analyze() {
 
       const normalizedQuery = query.toLowerCase()
 
-      const match = data.find(
+      const match = dataset.find(
         (d) =>
           d.pincode === query ||
           d.area.toLowerCase().includes(normalizedQuery)
       )
 
       if (match) {
-        setResult(match)
+        const score = calculateRetailScore(match, dataset)
+
+        setResult({
+          ...match,
+          retailScore: score,
+        })
       } else {
         alert("Location not found in demo Bangalore dataset")
       }
