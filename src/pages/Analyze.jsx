@@ -1,18 +1,34 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import SearchBar from "../components/SearchBar"
 import ResultCard from "../components/ResultCard"
 import AnalysisExplanation from "../components/AnalysisExplanation"
+import WeightSliders from "../components/WeightSliders"
 import { calculateRetailScore } from "../utils/scoreCalculator"
 
 export default function Analyze() {
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
+
+  // NEW: weight tuning state
+  const [weights, setWeights] = useState({
+    population: 15,
+    avg_income: 20,
+    footfall: 25,
+    retail_index: 20,
+    competitors: 10,
+    avg_rent: 10,
+  })
+
+  // NEW: for live recompute
+  const [lastMatch, setLastMatch] = useState(null)
+  const [datasetCache, setDatasetCache] = useState(null)
+
   const navigate = useNavigate()
   const datasetRef = useRef(null)
 
   const parseCSVRow = (row) => {
-    const parts = row.split(",").map(p => p.trim())
+    const parts = row.split(",").map((p) => p.trim())
     if (parts.length < 11) return null
 
     const [
@@ -66,6 +82,8 @@ export default function Analyze() {
       setLoading(true)
 
       const dataset = await loadDataset()
+      setDatasetCache(dataset)
+
       const normalizedQuery = query.toLowerCase().trim()
 
       const match = dataset.find(
@@ -80,7 +98,13 @@ export default function Analyze() {
         return
       }
 
-      const scoreResult = calculateRetailScore(match, dataset)
+      setLastMatch(match)
+
+      const scoreResult = calculateRetailScore(
+        match,
+        dataset,
+        weights
+      )
 
       setResult({
         ...match,
@@ -93,6 +117,34 @@ export default function Analyze() {
     } finally {
       setLoading(false)
     }
+  }
+
+  // NEW: live score recompute when sliders move
+  useEffect(() => {
+    if (!lastMatch || !datasetCache) return
+
+    const scoreResult = calculateRetailScore(
+      lastMatch,
+      datasetCache,
+      weights
+    )
+
+    setResult({
+      ...lastMatch,
+      retailScore: scoreResult.score,
+      breakdown: scoreResult.breakdown,
+    })
+  }, [weights])
+
+  const resetWeights = () => {
+    setWeights({
+      population: 15,
+      avg_income: 20,
+      footfall: 25,
+      retail_index: 20,
+      competitors: 10,
+      avg_rent: 10,
+    })
   }
 
   return (
@@ -129,6 +181,13 @@ export default function Analyze() {
           <>
             <ResultCard area={result} />
             <AnalysisExplanation breakdown={result.breakdown} />
+
+            {/* NEW: Weight Sliders UI */}
+            <WeightSliders
+              weights={weights}
+              onChange={setWeights}
+              onReset={resetWeights}
+            />
           </>
         )}
       </section>
