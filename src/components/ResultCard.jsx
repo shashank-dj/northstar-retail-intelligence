@@ -1,13 +1,12 @@
 import AreaOverview from "./AreaOverview"
 import RetailScore from "./RetailScore"
-import { calculateRetailScore } from "../utils/scoreCalculator"
 
 export default function ResultCard({ area }) {
-  const score = calculateRetailScore(area)
+  if (!area) return null
 
   return (
     <div className="max-w-3xl mx-auto mt-16">
-      <RetailScore score={score} />
+      <RetailScore score={area.retailScore} />
       <AreaOverview area={area} />
     </div>
   )
