@@ -10,7 +10,7 @@ export default function Analyze() {
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
 
-  // NEW: weight tuning state
+  // Weight tuning state
   const [weights, setWeights] = useState({
     population: 15,
     avg_income: 20,
@@ -20,7 +20,7 @@ export default function Analyze() {
     avg_rent: 10,
   })
 
-  // NEW: for live recompute
+  // For live recompute
   const [lastMatch, setLastMatch] = useState(null)
   const [datasetCache, setDatasetCache] = useState(null)
 
@@ -119,7 +119,7 @@ export default function Analyze() {
     }
   }
 
-  // NEW: live score recompute when sliders move
+  // Live score recompute when sliders move
   useEffect(() => {
     if (!lastMatch || !datasetCache) return
 
@@ -182,12 +182,24 @@ export default function Analyze() {
             <ResultCard area={result} />
             <AnalysisExplanation breakdown={result.breakdown} />
 
-            {/* NEW: Weight Sliders UI */}
+            {/* Weight Sliders */}
             <WeightSliders
               weights={weights}
               onChange={setWeights}
               onReset={resetWeights}
             />
+
+            {/* Financial Model CTA */}
+            <div className="mt-12 flex justify-center">
+              <button
+                className="bg-blue-600 hover:bg-blue-700 px-10 py-4 rounded-xl text-lg font-semibold transition"
+                onClick={() =>
+                  navigate("/financials", { state: { area: result } })
+                }
+              >
+                View Financial Model →
+              </button>
+            </div>
           </>
         )}
       </section>
