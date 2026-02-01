@@ -9,7 +9,13 @@ export default function Home() {
       
       {/* Navbar */}
       <nav className="flex justify-between items-center px-10 py-6">
-        <h1 className="text-2xl font-bold">Northstar Retail Intelligence</h1>
+        <h1
+          className="text-2xl font-bold cursor-pointer"
+          onClick={() => navigate("/")}
+        >
+          Northstar Retail Intelligence
+        </h1>
+
         <button className="bg-white text-black px-5 py-2 rounded-lg">
           Sign In
         </button>
@@ -23,8 +29,9 @@ export default function Home() {
         </h2>
 
         <p className="text-gray-400 mt-6 max-w-xl text-lg">
-          Location intelligence for retail brands.
-          Analyze demand, income, footfall & competition in seconds.
+          Location & financial intelligence for retail brands.
+          Analyze demand, income, footfall, competition
+          and payback in seconds.
         </p>
 
         {/* Primary CTAs */}
@@ -43,10 +50,24 @@ export default function Home() {
             Find Best Locations
           </button>
         </div>
+
+        {/* Financial Intelligence Callout */}
+        <div className="mt-10 bg-gray-900 border border-gray-800 rounded-xl p-6 max-w-2xl">
+          <p className="text-sm text-blue-400 font-semibold mb-1">
+            NEW · Financial Intelligence
+          </p>
+          <p className="text-gray-300">
+            Go beyond location scores. Estimate revenue, payback period,
+            rent sensitivity and export CFO-ready financial models
+            after analyzing any location.
+          </p>
+        </div>
       </section>
 
-      {/* Planned Features */}
-      <FeatureTabs />
+      {/* Platform Capabilities */}
+      <section className="mt-32">
+        <FeatureTabs />
+      </section>
 
       {/* Footer */}
       <footer className="mt-32 bg-gray-900 border-t border-gray-800 py-8">
@@ -55,7 +76,7 @@ export default function Home() {
             © {new Date().getFullYear()} Northstar
           </p>
           <p className="mt-1">
-            Retail Location Intelligence Platform · All rights reserved
+            Retail Location & Financial Intelligence Platform · All rights reserved
           </p>
         </div>
       </footer>
