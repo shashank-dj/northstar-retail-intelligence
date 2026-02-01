@@ -1,23 +1,34 @@
 import { useState } from "react"
 
-export default function SearchBar({ onSearch }) {
+export default function SearchBar({ onSearch, loading }) {
   const [query, setQuery] = useState("")
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (!query.trim()) return
+    onSearch(query)
+  }
+
   return (
-    <div className="flex bg-white rounded-xl overflow-hidden shadow-lg">
+    <form
+      onSubmit={handleSubmit}
+      className="flex w-full"
+    >
       <input
         type="text"
+        placeholder="Enter Pincode / Area / Street"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Enter Pincode / Area / Street"
-        className="flex-1 px-4 py-3 text-black outline-none"
+        className="flex-1 px-4 py-3 rounded-l-lg bg-white text-black focus:outline-none"
       />
+
       <button
-        onClick={() => onSearch(query)}
-        className="bg-blue-500 px-6 text-white font-semibold hover:bg-blue-600"
+        type="submit"
+        disabled={loading}
+        className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-r-lg font-semibold disabled:opacity-50"
       >
-        Analyze
+        {loading ? "Analyzing..." : "Analyze"}
       </button>
-    </div>
+    </form>
   )
 }
