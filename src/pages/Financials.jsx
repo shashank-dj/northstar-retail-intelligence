@@ -110,8 +110,10 @@ export default function Financials() {
         {/* Rent Sensitivity */}
         <RentSensitivity
           revenue={adjustedRevenue}
+          rent={rent}
           investment={investment}
         />
+
 
         {/* Revenue Drivers */}
         <RevenueDrivers area={area} category={category} />
